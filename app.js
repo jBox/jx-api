@@ -7,8 +7,9 @@ const serivce = require("./lib");
 const xAuth = require("./lib/middlewares/xAuth");
 const Logger = require("./Logger");
 const proxy = require("./proxy");
+const cv = require("config-vars");
 
-const ROOT = process.env.JX_API_SHARE_FOLDER;
+const ROOT = cv.env.shareFolder;
 const LOGS = Path.resolve(ROOT, "./logs");
 
 //init Logger
@@ -17,9 +18,8 @@ Logger.init(LOGS);
 const app = express();
 
 // jwt
-const secret = "testing-eab2afc452x6ffcf0dfc3976";
-const refreshSecret = "refresh-eab2afc452x6ffcf0dfc3976";
-app.use(jwt({ secret, credentialsRequired: false }));
+const publicKey = fs.readFileSync(Path.resolve(cv.env.jx.certPath, "./public.pem"));
+app.use(jwt({ secret: publicKey, credentialsRequired: false }));
 
 // xAuth
 app.use(xAuth);
@@ -34,9 +34,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // register serivce
 app.use(serivce({
     root: ROOT,
-    logger: new Logger(),
-    secret,
-    refreshSecret
+    logger: new Logger()
 }));
 
 // 404
