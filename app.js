@@ -1,5 +1,6 @@
 const Path = require("path");
 const fs = require("fs-extra");
+const cors = require("cors");
 const express = require("express");
 const bodyParser = require("body-parser");
 const jwt = require("express-jwt");
@@ -9,6 +10,10 @@ const Logger = require("./Logger");
 const proxy = require("./proxy");
 const cv = require("config-vars");
 
+const corsOptions = {
+    origin: cv.env.jx.wxHost
+};
+
 const ROOT = cv.env.shareFolder;
 const LOGS = Path.resolve(ROOT, "./logs");
 
@@ -16,6 +21,8 @@ const LOGS = Path.resolve(ROOT, "./logs");
 Logger.init(LOGS);
 
 const app = express();
+
+app.use(cors(corsOptions));
 
 // jwt
 const publicKey = fs.readFileSync(Path.resolve(cv.env.jx.certPath, "./public.pem"));

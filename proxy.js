@@ -1,6 +1,8 @@
 // include dependencies
 const proxy = require("http-proxy-middleware");
 
+const PROXY_METHOD = ["GET", "POST", "PUT", "DELETE"];
+
 // proxy middleware options
 const targetPort = process.env.JX_SERVICE_PORT;
 const options = {
@@ -13,7 +15,7 @@ const options = {
 };
 
 const filter = (pathname, req) => {
-    return pathname.match("^/api/orders");
+    return PROXY_METHOD.includes(req.method) && pathname.match("^/api/orders");
 };
 
 // create the proxy (with filter)

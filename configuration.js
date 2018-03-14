@@ -5,7 +5,8 @@ module.exports = cv.setup((getenv) => ({
     shareFolder: getenv("JX_API_SHARE_FOLDER"),
     jx: {
         certPath: getenv("JX_RSA_CERT_PATH"),
-        servicePort: getenv("JX_SERVICE_PORT")
+        servicePort: getenv("JX_SERVICE_PORT"),
+        wxHost: getenv("JX_WX_HOST")
     },
     wx: {
         appid: getenv("JX_WX_APP_ID"),
