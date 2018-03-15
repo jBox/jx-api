@@ -9,13 +9,14 @@ const options = {
     target: `http://localhost:${targetPort}`, // target host
     changeOrigin: true,               // needed for virtual hosted sites
     pathRewrite: {
-        "^/api/orders": "/orders"
+        "^/api/orders": "/orders",
+        "^/api/vehicles": "/vehicles"
     },
     logLevel: "debug"
 };
 
 const filter = (pathname, req) => {
-    return PROXY_METHOD.includes(req.method) && pathname.match("^/api/orders");
+    return PROXY_METHOD.includes(req.method) && pathname.match("^/api/(orders|vehicles)");
 };
 
 // create the proxy (with filter)
