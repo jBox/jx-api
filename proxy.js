@@ -1,10 +1,11 @@
 // include dependencies
 const proxy = require("http-proxy-middleware");
+const cv = require("config-vars");
 
 const PROXY_METHOD = ["GET", "POST", "PUT", "DELETE"];
 
 // proxy middleware options
-const targetPort = process.env.JX_SERVICE_PORT;
+const targetPort = cv.env.jx.servicePort;
 const options = {
     target: `http://localhost:${targetPort}`, // target host
     changeOrigin: true,               // needed for virtual hosted sites
