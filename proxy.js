@@ -11,13 +11,15 @@ const options = {
     changeOrigin: true,               // needed for virtual hosted sites
     pathRewrite: {
         "^/api/orders": "/orders",
-        "^/api/vehicles": "/vehicles"
+        "^/api/vehicles": "/vehicles",
+        "^/api/customers": "/customers"
     },
     logLevel: "debug"
 };
 
 const filter = (pathname, req) => {
-    return PROXY_METHOD.includes(req.method) && pathname.match("^/api/(orders|vehicles)");
+    return PROXY_METHOD.includes(req.method) &&
+        pathname.match("^/api/(orders|vehicles|customers)");
 };
 
 // create the proxy (with filter)
