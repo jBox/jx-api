@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const jwt = require("express-jwt");
 const serivce = require("./lib");
 const xAuth = require("./lib/middlewares/xAuth");
+const txt = require("./lib/middlewares/txt");
 const Logger = require("./Logger");
 const proxy = require("./proxy");
 const cv = require("config-vars");
@@ -27,6 +28,9 @@ app.use(cors(corsOptions));
 // jwt
 const publicKey = fs.readFileSync(Path.resolve(cv.env.jx.certPath, "./public.pem"));
 app.use(jwt({ secret: publicKey, credentialsRequired: false }));
+
+// txt
+app.use(txt);
 
 // xAuth
 app.use(xAuth);
